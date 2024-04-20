@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Roboto } from "next/font/google"
 
 import Providers from "./providers"
 
@@ -7,7 +7,10 @@ import "~/styles/globals.css"
 
 import { getServerAuthSession } from "~/server/auth"
 
-const inter = Inter({ subsets: ["latin"] })
+const sans = Roboto({
+  weight: ["400", "500", "700", "900"],
+  subsets: ["latin"],
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,7 +26,9 @@ export default async function RootLayout({
   const session = await getServerAuthSession()
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`${sans.className} bg-background text-base text-foreground`}
+      >
         <Providers session={session}>{children}</Providers>
       </body>
     </html>

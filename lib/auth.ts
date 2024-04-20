@@ -1,14 +1,20 @@
-import { type User } from "next-auth";
-import { db } from "~/server/db";
-import { compare } from "bcrypt";
+import { compare } from "bcrypt"
+import { type User } from "next-auth"
 
-export async function signInWithCredentials(credentials?: { email?: string; password?: string }): Promise<User | null> {
+import { db } from "~/server/db"
+
+export async function signInWithCredentials(credentials?: {
+  email?: string
+  password?: string
+}): Promise<User | null> {
   try {
     if (!credentials?.email || !credentials?.password) {
       throw new Error("Invalid credentials")
     }
 
-    const user = await db.user.findFirst({ where: { email: credentials.email }})
+    const user = await db.user.findFirst({
+      where: { email: credentials.email },
+    })
 
     if (!user?.password) {
       throw new Error("Invalid email and password")
@@ -27,7 +33,7 @@ export async function signInWithCredentials(credentials?: { email?: string; pass
       image: user.image,
       role: user.role,
     }
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     return null
   }

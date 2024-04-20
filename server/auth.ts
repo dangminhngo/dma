@@ -1,11 +1,16 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { type UserRole } from "@prisma/client"
-import { getServerSession, type DefaultSession, type DefaultUser, type NextAuthOptions } from "next-auth"
+import {
+  getServerSession,
+  type DefaultSession,
+  type DefaultUser,
+  type NextAuthOptions,
+} from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import Credentials from "next-auth/providers/credentials"
 
-import { db } from "./db"
 import { signInWithCredentials } from "~/lib/auth"
+import { db } from "./db"
 
 /*
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
@@ -19,8 +24,6 @@ declare module "next-auth" {
     role: UserRole
   }
 }
-
-
 
 /*
  * @see https://next-auth.js.org/configuration/options
@@ -37,7 +40,7 @@ export const authOptions: NextAuthOptions = {
         ...session.user,
         id: token.id,
         role: token.role,
-      }
+      },
     }),
     jwt: ({ token, user }) => ({
       ...token,
@@ -51,12 +54,12 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "text", placeholder: "John Doe" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         return signInWithCredentials(credentials)
-      }
-    })
+      },
+    }),
   ],
   debug: true,
 }
