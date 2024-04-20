@@ -21,6 +21,7 @@
     "@aws-sdk/client-s3": "^3.556.0",
     "@aws-sdk/s3-request-presigner": "^3.556.0",
     "@hookform/resolvers": "^3.3.4",
+    "@prisma/client": "5.12.1",
     "@t3-oss/env-nextjs": "^0.9.2",
     "@tanstack/react-query": "^5.29.2",
     "@tanstack/react-table": "^8.16.0",
@@ -32,6 +33,7 @@
     "next": "14.2.1",
     "next-auth": "^4.24.7",
     "nodemailer": "^6.9.13",
+    "prisma": "^5.12.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.51.3",
@@ -44,7 +46,7 @@
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@types/bcrypt": "^5.0.2",
     "@types/eslint": "^8.56.9",
-    "@types/node": "^20",
+    "@types/node": "^20.12.7",
     "@types/nodemailer": "^6.4.14",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
@@ -61,5 +63,5 @@
     "tsx": "^4.7.2",
     "typescript": "^5.4.2"
   },
-  "packageManager": "pnpm@8.15.3"
+  "packageManager": "pnpm@9.0.4"
 }
