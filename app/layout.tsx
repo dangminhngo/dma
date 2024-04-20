@@ -27,7 +27,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sans.className} bg-background text-base text-foreground`}
+        className={sans.className}
       >
         <Providers session={session}>{children}</Providers>
       </body>
