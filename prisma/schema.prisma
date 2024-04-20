@@ -13,6 +13,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Course {
+  id            Int            @id @default(autoincrement())
+  name          String
+  students      User[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  announcements Announcement[]
+}
+
+model Announcement {
+  id       Int    @id @default(autoincrement())
+  title    String
+  text     String
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId Int
+}
+
 // Necessary for Next auth
 enum UserRole {
   TEACHER
@@ -38,6 +55,8 @@ model User {
   status        UserStatus @default(PENDING)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+  course        Course?    @relation(fields: [courseId], references: [id])
+  courseId      Int?
 }
 
 model Account {
