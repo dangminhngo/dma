@@ -1,7 +1,11 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
-import "./globals.css"
+import Providers from "./providers"
+
+import "~/styles/globals.css"
+
+import { getServerAuthSession } from "~/server/auth"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -11,14 +15,17 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const session = await getServerAuthSession()
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Providers session={session}>{children}</Providers>
+      </body>
     </html>
   )
 }

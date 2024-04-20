@@ -30,6 +30,21 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
     maxAge: 60 * 60 * 24, // expires in 1 day
   },
+  callbacks: {
+    session: ({ session, token }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: token.id,
+        role: token.role,
+      }
+    }),
+    jwt: ({ token, user }) => ({
+      ...token,
+      id: user.id,
+      role: user.role,
+    }),
+  },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
     Credentials({
