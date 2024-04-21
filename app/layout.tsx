@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Roboto } from "next/font/google"
 
+import { Toaster } from "~/components/ui/toaster"
 import Providers from "./providers"
 
 import "~/styles/globals.css"
@@ -27,7 +28,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={sans.className}>
-        <Providers session={session}>{children}</Providers>
+        <Providers session={session}>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   )

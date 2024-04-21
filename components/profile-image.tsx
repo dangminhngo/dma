@@ -22,8 +22,8 @@ export default function ProfileImage({
         />
       )}
       <AvatarFallback
-        className="flex h-full w-full items-center justify-center bg-foreground text-background"
-        style={{ fontSize: size / 2 }}
+        className="tracking-none flex h-full w-full items-center justify-center bg-foreground leading-none text-background"
+        style={{ fontSize: size / 1.5 }}
       >
         {name?.[0]}
       </AvatarFallback>

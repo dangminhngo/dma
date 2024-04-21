@@ -42,11 +42,14 @@ export const authOptions: NextAuthOptions = {
         role: token.role,
       },
     }),
-    jwt: ({ token, user }) => ({
-      ...token,
-      id: user.id,
-      role: user.role,
-    }),
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.id = user.id
+        token.role = user.role
+      }
+
+      return token
+    },
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
@@ -61,6 +64,10 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: "/sign-in",
+    signOut: "/",
+  },
   debug: true,
 }
 
