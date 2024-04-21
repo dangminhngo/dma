@@ -9,7 +9,7 @@ export default async function AppLayout({
   return (
     <>
       <Header session={session} />
-      <div className="container py-12">{children}</div>
+      <main className="container py-12">{children}</main>
     </>
   )
 }
