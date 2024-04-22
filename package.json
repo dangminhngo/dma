@@ -74,17 +74,20 @@
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
     "chalk": "^5.3.0",
-    "eslint": "^8",
+    "eslint": "^8.57.0",
     "eslint-config-next": "14.2.1",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
-    "postcss": "^8",
+    "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^3.4.3",
     "tsx": "^4.7.2",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.5"
   },
-  "packageManager": "pnpm@9.0.4"
+  "packageManager": "pnpm@9.0.4",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
 }
