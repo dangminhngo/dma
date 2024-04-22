@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { ManageAccountsIcon, RollerIcon } from "~/components/icons"
+import { ManageAccountsIcon, PersonIcon, RollerIcon } from "~/components/icons"
 import { cn } from "~/lib/utils"
 
 export default function SettingsSidebar() {
@@ -25,6 +25,7 @@ export default function SettingsSidebar() {
 }
 
 const tabs = [
+  { label: "Public Profile", href: "/settings/profile", icon: PersonIcon },
   { label: "Account", href: "/settings/account", icon: ManageAccountsIcon },
   { label: "Appearance", href: "/settings/appearance", icon: RollerIcon },
 ]

@@ -48,11 +48,13 @@ export const accountRouter = createTRPCRouter({
     }),
   update: protectedProcedure
     .input(
-      z.object({
-        email: z.string().email(),
-        name: z.string(),
-        image: z.string(),
-      })
+      z
+        .object({
+          email: z.string().email(),
+          name: z.string(),
+          image: z.string(),
+        })
+        .partial()
     )
     .mutation(async ({ ctx, input }) => {
       return ctx.db.user.update({
