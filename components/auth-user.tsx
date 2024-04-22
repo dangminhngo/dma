@@ -1,6 +1,8 @@
 "use client"
 
+import Link from "next/link"
 import { type User } from "next-auth"
+import { signOut } from "next-auth/react"
 
 import { LogoutIcon, SettingsIcon } from "./icons"
 import ProfileImage from "./profile-image"
@@ -23,7 +25,7 @@ export default function AuthUser({ user }: AuthUserProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="space-x-2">
+        <Button variant="invisible" className="space-x-2">
           <ProfileImage image={user.image} name={user.name} />
           <span>{user.name}</span>
         </Button>
@@ -41,14 +43,19 @@ export default function AuthUser({ user }: AuthUserProps) {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem className="cursor-pointer space-x-2">
-              <SettingsIcon className="h-4 w-4" />
-              <span>Settings</span>
-            </DropdownMenuItem>
+            <Link href="/settings/profile">
+              <DropdownMenuItem className="cursor-pointer space-x-2">
+                <SettingsIcon className="h-4 w-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem className="cursor-pointer space-x-2 text-destructive/80 hover:text-destructive focus:text-destructive">
+            <DropdownMenuItem
+              className="cursor-pointer space-x-2 text-destructive/80 hover:text-destructive focus:text-destructive"
+              onClick={() => signOut({ callbackUrl: "/sign-in" })}
+            >
               <LogoutIcon className="h-4 w-4" />
               <span>Log out</span>
             </DropdownMenuItem>
