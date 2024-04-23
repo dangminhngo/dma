@@ -2,9 +2,9 @@ import { redirect } from "next/navigation"
 
 import { Heading } from "~/components/ui/heading"
 import { getServerAuthSession } from "~/server/auth"
-import SettingsProfile from "./settings-profile"
+import SettingsAccount from "./settings-account"
 
-export default async function SettingsProfilePage() {
+export default async function SettingsAccountPage() {
   const session = await getServerAuthSession()
 
   if (!session) {
@@ -13,8 +13,8 @@ export default async function SettingsProfilePage() {
 
   return (
     <div className="space-y-8">
-      <Heading as="h1">Public Profile</Heading>
-      <SettingsProfile session={session} />
+      <Heading as="h1">Account</Heading>
+      <SettingsAccount session={session} />
     </div>
   )
 }

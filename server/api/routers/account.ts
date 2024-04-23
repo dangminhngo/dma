@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { UserRole } from "@prisma/client"
+import { UserRole, UserStatus } from "@prisma/client"
 import { TRPCError } from "@trpc/server"
-import { hash } from "bcrypt"
+import { compare, hash } from "bcrypt"
 import { type Adapter } from "next-auth/adapters"
 import { z } from "zod"
 
@@ -52,7 +52,7 @@ export const accountRouter = createTRPCRouter({
         .object({
           email: z.string().email(),
           name: z.string(),
-          image: z.string(),
+          image: z.nullable(z.string()),
         })
         .partial()
     )
@@ -62,6 +62,43 @@ export const accountRouter = createTRPCRouter({
         data: input,
       })
     }),
+  changePassword: protectedProcedure
+    .input(
+      z.object({
+        oldPassword: z.string(),
+        newPassword: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findUnique({
+        where: { id: ctx.session.user.id },
+      })
+
+      if (!user?.password) throw new TRPCError({ code: "CONFLICT" })
+
+      const isMatchedPassword = await compare(input.oldPassword, user.password)
+
+      if (!isMatchedPassword) throw new TRPCError({ code: "BAD_REQUEST" })
+
+      const encryptedPassword = await hash(
+        input.newPassword,
+        env.BCRYPT_SALT_ROUNDS
+      )
+
+      return ctx.db.user.update({
+        where: { id: user.id },
+        data: { password: encryptedPassword },
+        select: userSelects,
+      })
+    }),
+  deactivate: protectedProcedure.mutation(async ({ ctx }) => {
+    return ctx.db.user.update({
+      where: { id: ctx.session.user.id },
+      data: { status: UserStatus.DEACTIVATED },
+
+      select: userSelects,
+    })
+  }),
   delete: protectedProcedure.mutation(async ({ ctx }) => {
     return ctx.db.user.delete({ where: { id: ctx.session.user.id } })
   }),

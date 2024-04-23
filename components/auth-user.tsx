@@ -26,14 +26,14 @@ export default function AuthUser({ user }: AuthUserProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="invisible" className="space-x-2">
-          <ProfileImage image={user.image} name={user.name} />
+          <ProfileImage image={user.image} name={user.name} size={20} />
           <span>{user.name}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent className="min-w-[256px]" align="end">
           <DropdownMenuGroup>
-            <div className="flex items-center space-x-2 px-4 py-2">
+            <div className="flex items-center space-x-2 p-4">
               <ProfileImage image={user.image} name={user.name} size={40} />
               <div className="flex flex-col -space-y-0.5">
                 <span className="font-medium">{user.name}</span>
