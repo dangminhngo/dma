@@ -1,6 +1,6 @@
 import type { SVGProps } from "~/types"
 
-export function AddIcon(props: SVGProps) {
+export function PlusIcon(props: SVGProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +162,7 @@ export function PersonIcon(props: SVGProps) {
   )
 }
 
-export function RemoveIcon(props: SVGProps) {
+export function MinusIcon(props: SVGProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

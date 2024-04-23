@@ -1,4 +1,5 @@
 import { accountRouter } from "./routers/account"
+import { courseRouter } from "./routers/course"
 import { createCallerFactory, createTRPCRouter } from "./trpc"
 
 /*
@@ -8,6 +9,7 @@ import { createCallerFactory, createTRPCRouter } from "./trpc"
  * */
 export const appRouter = createTRPCRouter({
   account: accountRouter,
+  course: courseRouter,
 })
 
 /*

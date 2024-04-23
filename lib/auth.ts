@@ -3,6 +3,7 @@ import { compare } from "bcrypt"
 import { type User } from "next-auth"
 
 import { env } from "~/env"
+import { userSelects } from "~/server/api/selects"
 import { db } from "~/server/db"
 
 export async function signInWithCredentials(credentials?: {
@@ -16,6 +17,7 @@ export async function signInWithCredentials(credentials?: {
 
     const user = await db.user.findFirst({
       where: { email: credentials.email },
+      select: {...userSelects, password: true },
     })
 
     if (

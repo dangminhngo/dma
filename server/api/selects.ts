@@ -9,3 +9,10 @@ export const userSelects = {
   role: true,
   status: true,
 } satisfies Prisma.UserSelect
+
+export const courseSelects = {
+  id: true,
+  name: true,
+  teacher: { select: userSelects },
+  students: { select: userSelects },
+} satisfies Prisma.CourseSelect

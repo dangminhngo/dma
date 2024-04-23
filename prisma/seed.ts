@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { UserRole, UserStatus } from "@prisma/client"
+import { UserRole, UserStatus, type User } from "@prisma/client"
 import { hash } from "bcrypt"
 
 import { env } from "~/env"
@@ -28,7 +28,7 @@ async function createAuthUser(data: UserData) {
 
   const encryptedPassword = await hash(data.password, env.BCRYPT_SALT_ROUNDS)
 
-  await db.user.update({
+  const user = await db.user.update({
     where: { email: data.email },
     data: {
       role: data.role,
@@ -36,6 +36,8 @@ async function createAuthUser(data: UserData) {
       status: data.status,
     },
   })
+
+  return user.id
 }
 
 const users = [
