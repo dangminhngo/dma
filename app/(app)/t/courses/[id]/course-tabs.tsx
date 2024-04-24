@@ -35,6 +35,12 @@ export default function TeacherCourseTabs({
           Assignments
         </LinkTabsTrigger>
         <LinkTabsTrigger
+          href={`/t/courses/${id}/announcements`}
+          active={pathname?.startsWith(`/t/courses/${id}/announcements`)}
+        >
+          Announcements
+        </LinkTabsTrigger>
+        <LinkTabsTrigger
           href={`/t/courses/${id}/settings`}
           active={pathname?.startsWith(`/t/courses/${id}/settings`)}
         >

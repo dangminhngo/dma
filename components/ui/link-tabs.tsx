@@ -6,7 +6,7 @@ import { cn } from "~/lib/utils"
 interface LinkTabsProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 function LinkTabs({ className, ...props }: LinkTabsProps) {
-  return <div className={cn("space-y-4", className)} {...props} />
+  return <div className={cn("", className)} {...props} />
 }
 
 interface LinkTabsListProps extends React.HTMLAttributes<HTMLDivElement> {}

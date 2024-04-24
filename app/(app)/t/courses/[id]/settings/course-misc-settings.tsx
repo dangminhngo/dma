@@ -23,7 +23,7 @@ export default function CourseMiscSettings({
   course,
 }: CourseMiscSettingsProps) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 py-6">
       <Heading as="h3">Miscs</Heading>
       <div className="flex items-center space-x-2">
         <span className="font-medium">Name:</span>

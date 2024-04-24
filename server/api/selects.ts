@@ -10,9 +10,19 @@ export const userSelects = {
   status: true,
 } satisfies Prisma.UserSelect
 
+export const announcementSelects = {
+  id: true,
+  text: true,
+  level: true,
+  courseId: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.AnnouncementSelect
+
 export const courseSelects = {
   id: true,
   name: true,
   teacher: { select: userSelects },
   students: { select: userSelects },
+  announcements: { select: announcementSelects },
 } satisfies Prisma.CourseSelect

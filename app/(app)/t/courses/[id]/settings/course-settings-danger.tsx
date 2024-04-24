@@ -46,7 +46,7 @@ export default function CourseSettingsDanger({
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 py-6">
       <Heading as="h3" className="text-destructive">
         Danger
       </Heading>
