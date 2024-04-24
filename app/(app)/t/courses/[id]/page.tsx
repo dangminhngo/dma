@@ -1,18 +1,9 @@
-import { Heading } from "~/components/ui/heading"
-import { api } from "~/trpc/server"
+import { redirect } from "next/navigation"
 
-export default async function TeacherCoursePage({
+export default function TeacherCoursePage({
   params,
 }: {
   params: { id: string }
 }) {
-  const course = await api.course.byId({ id: +params.id })
-
-  if (!course) return <div>Cannot fetching course</div>
-
-  return (
-    <div className="space-y-4">
-      <Heading as="h1">{course.name}</Heading>
-    </div>
-  )
+  return redirect(`/t/courses/${params.id}/sets`)
 }

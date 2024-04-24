@@ -67,6 +67,30 @@ export const courseRouter = createTRPCRouter({
         select: courseSelects,
       })
     }),
+  addStudent: teacherProcedure
+    .input(z.object({ courseId: z.number(), studentId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.course.update({
+        where: { id: input.courseId },
+        data: {
+          students: {
+            connect: { id: input.studentId },
+          },
+        },
+      })
+    }),
+  removeStudent: teacherProcedure
+    .input(z.object({ courseId: z.number(), studentId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.course.update({
+        where: { id: input.courseId },
+        data: {
+          students: {
+            disconnect: { id: input.studentId },
+          },
+        },
+      })
+    }),
   delete: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
