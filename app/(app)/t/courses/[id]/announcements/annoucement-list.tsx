@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
+import { Heading } from "~/components/ui/heading"
 import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
 import AnnouncementCard from "./announcement-card"
@@ -45,25 +46,30 @@ export default function AnnouncementList({ course }: AnnouncementListProps) {
 
   return (
     <div className="flex flex-col items-stretch space-y-2 py-8">
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button className="flex items-center space-x-2 self-end" size="sm">
-            <PlusIcon className="h-4 w-4" />
-            <span>Add an announcement</span>
-          </Button>
-        </DialogTrigger>
-        <DialogPortal>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create an announcement</DialogTitle>
-              <DialogDescription>
-                Add a new announcement to the course
-              </DialogDescription>
-            </DialogHeader>
-            <AnnouncementForm courseId={course.id} />
-          </DialogContent>
-        </DialogPortal>
-      </Dialog>
+      <div className="flex items-center justify-between">
+        <Heading as="h3">
+          Announcements ({announcementListQuery.data?.length ?? 0})
+        </Heading>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="flex items-center space-x-1 self-end" size="xs">
+              <PlusIcon className="h-4 w-4" />
+              <span>Add</span>
+            </Button>
+          </DialogTrigger>
+          <DialogPortal>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create an announcement</DialogTitle>
+                <DialogDescription>
+                  Add a new announcement to the course
+                </DialogDescription>
+              </DialogHeader>
+              <AnnouncementForm courseId={course.id} />
+            </DialogContent>
+          </DialogPortal>
+        </Dialog>
+      </div>
       <div className="flex flex-col items-stretch space-y-2">
         {announcementListQuery.data?.map((a) => (
           <AnnouncementCard

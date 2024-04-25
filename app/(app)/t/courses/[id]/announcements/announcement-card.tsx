@@ -39,7 +39,7 @@ export default function AnnouncementCard({
   onDelete,
 }: AnnouncementCardProps) {
   return (
-    <div className="flex items-center justify-between rounded-lg border border-l-8 px-6 py-3 shadow">
+    <div className="group flex items-center justify-between rounded-lg border border-l-8 px-6 py-3 shadow">
       <div className="space-y-1">
         <div className="flex items-center space-x-2 text-sm">
           <span className="text-muted-foreground">
@@ -57,7 +57,7 @@ export default function AnnouncementCard({
         </div>
         <div>{announcement.text}</div>
       </div>
-      <div className="flex items-center space-x-2">
+      <div className="pointer-events-none flex items-center space-x-2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
         <Dialog>
           <DialogTrigger asChild>
             <Button size="icon-sm" variant="ghost">
@@ -82,7 +82,7 @@ export default function AnnouncementCard({
         </Dialog>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button size="icon-sm" variant="ghost">
+            <Button size="icon-sm">
               <DeleteIcon className="h-4 w-4" />
             </Button>
           </AlertDialogTrigger>

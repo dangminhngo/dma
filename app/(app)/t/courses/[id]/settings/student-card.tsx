@@ -23,7 +23,7 @@ interface StudentCardProps {
 
 export default function StudentCard({ user, onRemove }: StudentCardProps) {
   return (
-    <div className="flex items-center justify-between space-x-2 rounded-lg border p-4">
+    <div className="group flex items-center justify-between space-x-2 rounded-lg border p-4">
       <div className="flex items-center space-x-2">
         <ProfileImage image={user.image} name={user.name} size={40} />
         <div className="-space-y-0.5">
@@ -31,7 +31,7 @@ export default function StudentCard({ user, onRemove }: StudentCardProps) {
           <div className="text-sm text-muted-foreground">{user.email}</div>
         </div>
       </div>
-      <div className="flex items-center space-x-2">
+      <div className="pointer-events-none flex items-center space-x-2 opacity-0 group-hover:pointer-events-auto group-hover:opacity-100">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button size="icon-sm">
