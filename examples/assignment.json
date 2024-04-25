@@ -1,0 +1,27 @@
+[
+  {
+    "question": "What _ you doing?",
+    "answers": [
+      {
+        "text": "are",
+        "right": true
+      },
+      {
+        "text": "is",
+        "right": true
+      },
+      {
+        "text": "was",
+        "right": true
+      },
+      {
+        "text": "were",
+        "right": true
+      }
+    ]
+  },
+  {
+    "question": "Some time you don't need to _ a right answer.",
+    "answer": "choose"
+  }
+]

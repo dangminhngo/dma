@@ -1,7 +1,9 @@
 import { accountRouter } from "./routers/account"
 import { announcemenRouter } from "./routers/announcement"
 import { courseRouter } from "./routers/course"
+import { setRouter } from "./routers/set"
 import { userRouter } from "./routers/user"
+import { wordRouter } from "./routers/word"
 import { createCallerFactory, createTRPCRouter } from "./trpc"
 
 /*
@@ -10,6 +12,8 @@ import { createCallerFactory, createTRPCRouter } from "./trpc"
  * All routers added in /api/routers
  * */
 export const appRouter = createTRPCRouter({
+  set: setRouter,
+  word: wordRouter,
   announcement: announcemenRouter,
   course: courseRouter,
   account: accountRouter,

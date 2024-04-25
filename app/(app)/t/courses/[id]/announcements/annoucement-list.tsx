@@ -44,6 +44,11 @@ export default function AnnouncementList({ course }: AnnouncementListProps) {
 
   if (!course) return null
 
+  if (announcementListQuery.isLoading) return <div>Loading...</div>
+
+  if (announcementListQuery.isError || !announcementListQuery.data)
+    return <div>Cannot fetch announcements</div>
+
   return (
     <div className="flex flex-col items-stretch space-y-2 py-8">
       <div className="flex items-center justify-between">

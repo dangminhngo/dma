@@ -1,5 +1,4 @@
-import { AnnouncementLevel } from "@prisma/client"
-import { format } from "date-fns"
+import Link from "next/link"
 
 import { DeleteIcon, EditIcon } from "~/components/icons"
 import {
@@ -24,38 +23,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
-import { cn } from "~/lib/utils"
 import { type RouterOutput } from "~/trpc/types"
 import { type InferElement } from "~/types"
-import AnnouncementForm from "./announcement-form"
+import WordForm from "./word-form"
+import Image from "next/image"
 
-interface AnnouncementCardProps {
-  announcement: InferElement<RouterOutput["announcement"]["list"]>
+interface WordCardProps {
+  word: InferElement<RouterOutput["word"]["list"]>
   onDelete: () => void
 }
 
-export default function AnnouncementCard({
-  announcement,
-  onDelete,
-}: AnnouncementCardProps) {
+export default function WordCard({ word, onDelete }: WordCardProps) {
   return (
-    <div className="group flex items-center justify-between rounded-lg border border-l-8 px-6 py-3 shadow">
-      <div className="space-y-1">
-        <div className="flex items-center space-x-2 text-sm">
-          <span className="text-muted-foreground">
-            {format(announcement.createdAt, "dd/MM/yyyy - kk:mm:ss")}
-          </span>
-          <span>|</span>
-          <span
-            className={cn(
-              "font-medium",
-              getClassNamesByLevel(announcement.level)
-            )}
-          >
-            {announcement.level}
-          </span>
-        </div>
-        <div>{announcement.text}</div>
+    <div className="group flex items-center justify-between rounded-lg border p-4">
+      <div>
+        <Link href={`/t/words/${word.id}`} className="hover:underline">
+          <div className="font-medium">{word.term}</div>
+        </Link>
+        <div className="text-sm text-muted-foreground">{word.definition}</div>
+        {word.image && <div className="relative"><Image src={word.image} alt={word.term} fill /></div>}
       </div>
       <div className="pointer-events-none flex items-center space-x-2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
         <Dialog>
@@ -67,16 +53,12 @@ export default function AnnouncementCard({
           <DialogPortal>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Update an announcement</DialogTitle>
+                <DialogTitle>Update a word</DialogTitle>
                 <DialogDescription>
-                  Change an announcement in the course
+                  Change word term and definition
                 </DialogDescription>
               </DialogHeader>
-              <AnnouncementForm
-                courseId={announcement.courseId}
-                announcement={announcement}
-                editing
-              />
+              <WordForm setId={word.setId} word={word} editing />
             </DialogContent>
           </DialogPortal>
         </Dialog>
@@ -91,7 +73,7 @@ export default function AnnouncementCard({
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This will remove all data of the announcement from the course
+                  This will remove all data of the word from the set
                   and cannot be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
@@ -107,13 +89,4 @@ export default function AnnouncementCard({
       </div>
     </div>
   )
-}
-
-function getClassNamesByLevel(level: AnnouncementLevel) {
-  switch (level) {
-    case AnnouncementLevel.NORMAL:
-      return "text-muted-foreground"
-    case AnnouncementLevel.IMPORTANT:
-      return "text-destructive"
-  }
 }

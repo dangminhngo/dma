@@ -26,3 +26,21 @@ export const courseSelects = {
   students: { select: userSelects },
   announcements: { select: announcementSelects },
 } satisfies Prisma.CourseSelect
+
+export const wordSelects = {
+  id: true,
+  term: true,
+  definition: true,
+  image: true,
+  setId: true,
+} satisfies Prisma.WordSelect
+
+export const setSelects = {
+  id: true,
+  title: true,
+  description: true,
+  _count: { select: { words: true } },
+  courseId: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.SetSelect
