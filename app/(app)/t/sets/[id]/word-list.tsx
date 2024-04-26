@@ -14,6 +14,7 @@ import {
 import { Heading } from "~/components/ui/heading"
 import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
+import SetImport from "./set-import"
 import WordCard from "./word-card"
 import WordForm from "./word-form"
 
@@ -50,25 +51,53 @@ export default function WordList({ set }: WordListProps) {
     <div className="flex flex-col items-stretch space-y-2">
       <div className="flex items-center justify-between">
         <Heading as="h3">Words ({wordListQuery.data.length ?? 0})</Heading>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="flex items-center space-x-1 self-end" size="xs">
-              <PlusIcon className="h-4 w-4" />
-              <span>Add</span>
-            </Button>
-          </DialogTrigger>
-          <DialogPortal>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Create a word</DialogTitle>
-                <DialogDescription>
-                  Add a new word to the set
-                </DialogDescription>
-              </DialogHeader>
-              <WordForm setId={set.id} />
-            </DialogContent>
-          </DialogPortal>
-        </Dialog>
+        <div className="flex items-center space-x-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                className="flex items-center space-x-1 self-end"
+                variant="outline"
+                size="xs"
+              >
+                <PlusIcon className="h-4 w-4" />
+                <span>Import</span>
+              </Button>
+            </DialogTrigger>
+            <DialogPortal>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Import from text file</DialogTitle>
+                  <DialogDescription>
+                    Create a set from a text file on your computer
+                  </DialogDescription>
+                </DialogHeader>
+                <SetImport setId={set.id} />
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                className="flex items-center space-x-1 self-end"
+                size="xs"
+              >
+                <PlusIcon className="h-4 w-4" />
+                <span>Add</span>
+              </Button>
+            </DialogTrigger>
+            <DialogPortal>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Create a word</DialogTitle>
+                  <DialogDescription>
+                    Add a new word to the set
+                  </DialogDescription>
+                </DialogHeader>
+                <WordForm setId={set.id} />
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

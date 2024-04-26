@@ -1,64 +1,35 @@
-interface Word {
-  term: string
-  definition: string
+import { z } from "zod"
+
+const setSchema = z.array(
+  z.object({ term: z.string(), definition: z.string() })
+)
+
+export function parseSet(json: string): z.infer<typeof setSchema> | undefined {
+  try {
+    return setSchema.parse(JSON.parse(json))
+  } catch (err) {
+    console.error(err)
+  }
 }
 
-export function parseJSONtoSet(json: string) {
-  const set = JSON.parse(json) as Word[]
-  return set
-}
+const assignmentSchema = z.object({
+  multipleChoiceQuestions: z.array(
+    z.object({
+      question: z.string(),
+      answers: z.object({ text: z.string(), right: z.boolean() }),
+    })
+  ),
+  incompleteQuestions: z.array(
+    z.object({ question: z.string(), answer: z.string() })
+  ),
+})
 
-interface MultipleChoiceQuestion {
-  question: string
-  answers: { text: string; right: boolean }[]
-}
-
-interface IncompleteQuestion {
-  question: string
-  answer: string
-}
-
-function isMultipleChoice(
-  question: MultipleChoiceQuestion | IncompleteQuestion
-): question is MultipleChoiceQuestion {
-  return (question as MultipleChoiceQuestion).answers?.length > 0
-}
-
-function isIncompleteQuestion(
-  question: MultipleChoiceQuestion | IncompleteQuestion
-): question is IncompleteQuestion {
-  return !!(question as IncompleteQuestion).answer
-}
-
-export function parseJSONtoAssignment(json: string) {
-  const questions = JSON.parse(json) as (
-    | MultipleChoiceQuestion
-    | IncompleteQuestion
-  )[]
-  return questions.reduce(
-    (r, q) => {
-      if (isMultipleChoice(q)) {
-        return {
-          ...r,
-          multipleChoiceQuestions: [...r.multipleChoiceQuestions, q],
-        }
-      }
-
-      if (isIncompleteQuestion(q)) {
-        return {
-          ...r,
-          incompleteQuestions: [...r.incompleteQuestions, q],
-        }
-      }
-
-      return r
-    },
-    {
-      multipleChoiceQuestions: [],
-      incompleteQuestions: [],
-    } as {
-      multipleChoiceQuestions: MultipleChoiceQuestion[]
-      incompleteQuestions: IncompleteQuestion[]
-    }
-  )
+export function parseAssignment(
+  json: string
+): z.infer<typeof assignmentSchema> | undefined {
+  try {
+    return assignmentSchema.parse(JSON.parse(json))
+  } catch (err) {
+    console.error(err)
+  }
 }

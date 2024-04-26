@@ -28,7 +28,7 @@ import {
   FormMessage,
 } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
-import { ALLOWED_IMAGES, MAX_FILE_SIZE } from "~/lib/constants"
+import { ALLOWED_IMAGES, MAX_IMAGE_SIZE } from "~/lib/constants"
 import { api } from "~/trpc/react"
 
 interface SettingsProfileProps {
@@ -204,6 +204,6 @@ const updateImageSchema = z.object({
     .custom<File>()
     .refine(
       (file: File) =>
-        file.size <= MAX_FILE_SIZE && ALLOWED_IMAGES.includes(file.type)
+        file.size <= MAX_IMAGE_SIZE && ALLOWED_IMAGES.includes(file.type)
     ),
 })
