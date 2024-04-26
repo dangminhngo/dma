@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Image from "next/image"
 
 import { DeleteIcon, EditIcon } from "~/components/icons"
 import {
@@ -26,7 +26,6 @@ import {
 import { type RouterOutput } from "~/trpc/types"
 import { type InferElement } from "~/types"
 import WordForm from "./word-form"
-import Image from "next/image"
 
 interface WordCardProps {
   word: InferElement<RouterOutput["word"]["list"]>
@@ -37,11 +36,13 @@ export default function WordCard({ word, onDelete }: WordCardProps) {
   return (
     <div className="group flex items-center justify-between rounded-lg border p-4">
       <div>
-        <Link href={`/t/words/${word.id}`} className="hover:underline">
-          <div className="font-medium">{word.term}</div>
-        </Link>
-        <div className="text-sm text-muted-foreground">{word.definition}</div>
-        {word.image && <div className="relative"><Image src={word.image} alt={word.term} fill /></div>}
+        <div className="font-medium">{word.term}</div>
+        <div className="text-muted-foreground">{word.definition}</div>
+        {word.image && (
+          <div className="relative">
+            <Image src={word.image} alt={word.term} fill />
+          </div>
+        )}
       </div>
       <div className="pointer-events-none flex items-center space-x-2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
         <Dialog>
@@ -73,8 +74,8 @@ export default function WordCard({ word, onDelete }: WordCardProps) {
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This will remove all data of the word from the set
-                  and cannot be undone.
+                  This will remove all data of the word from the set and cannot
+                  be undone.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
