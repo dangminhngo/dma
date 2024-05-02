@@ -12,17 +12,12 @@ export function parseSet(json: string): z.infer<typeof setSchema> | undefined {
   }
 }
 
-const assignmentSchema = z.object({
-  multipleChoiceQuestions: z.array(
-    z.object({
-      question: z.string(),
-      answers: z.object({ text: z.string(), right: z.boolean() }),
-    })
-  ),
-  incompleteQuestions: z.array(
-    z.object({ question: z.string(), answer: z.string() })
-  ),
-})
+const assignmentSchema = z.array(
+  z.object({
+    text: z.string(),
+    answers: z.array(z.object({ text: z.string(), right: z.boolean() })),
+  })
+)
 
 export function parseAssignment(
   json: string

@@ -16,7 +16,7 @@ datasource db {
 model Course {
   id            Int            @id @default(autoincrement())
   name          String
-  teacher       User           @relation(fields: [teacherId], references: [id], name: "Teacher")
+  teacher       User           @relation(fields: [teacherId], references: [id], name: "Teacher", onDelete: Cascade)
   teacherId     String
   students      User[]         @relation("Student")
   createdAt     DateTime       @default(now())
@@ -35,7 +35,7 @@ model Announcement {
   id        Int               @id @default(autoincrement())
   text      String
   level     AnnouncementLevel @default(NORMAL)
-  course    Course            @relation(fields: [courseId], references: [id])
+  course    Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId  Int
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
@@ -48,7 +48,7 @@ model Set {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   words       Word[]
-  course      Course   @relation(fields: [courseId], references: [id])
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    Int
 }
 
@@ -57,41 +57,40 @@ model Word {
   term       String
   definition String?
   image      String?
-  set        Set     @relation(fields: [setId], references: [id])
+  set        Set     @relation(fields: [setId], references: [id], onDelete: Cascade)
   setId      Int
 }
 
 model Assignment {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  course      Course   @relation(fields: [courseId], references: [id])
+  expiresIn   String     @default("72h")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  course      Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    Int
+  questions   Question[]
 }
 
-model MultipleChoiceQuestion {
-  id    Int     @id @default(autoincrement())
-  text  String
-  image String?
-  audio String?
+model Question {
+  id           Int        @id @default(autoincrement())
+  text         String
+  image        String?
+  audio        String?
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  assignmentId Int
+  answers      Answer[]
 }
 
-model MultipleChoiceAnswer {
-  id    Int     @id @default(autoincrement())
-  text  String?
-  image String?
-  audio String?
-  right Boolean @default(false)
-}
-
-model IncompleteQuestion {
-  id     Int     @id @default(autoincrement())
-  text   String
-  image  String?
-  audio  String?
-  answer String
+model Answer {
+  id         Int      @id @default(autoincrement())
+  text       String?
+  image      String?
+  audio      String?
+  right      Boolean  @default(false)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId Int
 }
 
 // Necessary for Next auth

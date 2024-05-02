@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { setSelects, wordSelects } from "../selects"
+import { setSelects } from "../selects"
 import { createTRPCRouter, protectedProcedure, teacherProcedure } from "../trpc"
 
 export const setRouter = createTRPCRouter({

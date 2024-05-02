@@ -44,3 +44,31 @@ export const setSelects = {
   createdAt: true,
   updatedAt: true,
 } satisfies Prisma.SetSelect
+
+export const assignmentSelects = {
+  id: true,
+  title: true,
+  description: true,
+  _count: {
+    select: { questions: true },
+  },
+  courseId: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.AssignmentSelect
+
+export const answerSelects = {
+  id: true,
+  text: true,
+  right: true,
+  questionId: true,
+} satisfies Prisma.AnswerSelect
+
+export const questionSelects = {
+  id: true,
+  text: true,
+  image: true,
+  audio: true,
+  answers: { select: answerSelects },
+  assignmentId: true,
+} satisfies Prisma.QuestionSelect
