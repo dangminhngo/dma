@@ -72,3 +72,10 @@ export const questionSelects = {
   answers: { select: answerSelects },
   assignmentId: true,
 } satisfies Prisma.QuestionSelect
+
+export const scoreSelects = {
+  id: true,
+  points: true,
+  assignmentId: true,
+  studentId: true,
+} satisfies Prisma.ScoreSelect

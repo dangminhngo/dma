@@ -71,6 +71,7 @@ model Assignment {
   course      Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId    Int
   questions   Question[]
+  scores      Score[]
 }
 
 model Question {
@@ -91,6 +92,17 @@ model Answer {
   right      Boolean  @default(false)
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId Int
+}
+
+model Score {
+  id           Int        @id @default(autoincrement())
+  student      User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId    String
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  assignmentId Int
+  points       Float
+
+  @@unique([assignmentId, studentId])
 }
 
 // Necessary for Next auth
@@ -120,6 +132,7 @@ model User {
   updatedAt        DateTime   @updatedAt
   teacherOfCourses Course[]   @relation("Teacher")
   studentOfCourses Course[]   @relation("Student")
+  scores           Score[]
 }
 
 model Account {

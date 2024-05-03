@@ -1,7 +1,7 @@
 import { api } from "~/trpc/server"
 import AnnouncementList from "./annoucement-list"
 
-export default async function TeacherCourseAssignmentsPage({
+export default async function TeacherCourseAnnouncementsPage({
   params,
 }: {
   params: { id: string }
