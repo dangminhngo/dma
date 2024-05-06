@@ -69,6 +69,7 @@ export const questionSelects = {
   text: true,
   image: true,
   audio: true,
+  explanation: true,
   answers: { select: answerSelects },
   assignmentId: true,
 } satisfies Prisma.QuestionSelect
@@ -79,3 +80,11 @@ export const scoreSelects = {
   assignmentId: true,
   studentId: true,
 } satisfies Prisma.ScoreSelect
+
+export const studentAnswerSelects = {
+  id: true,
+  studentId: true,
+  assignmentId: true,
+  questionId: true,
+  answerId: true,
+} satisfies Prisma.StudentAnswerSelect

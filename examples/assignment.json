@@ -1,6 +1,7 @@
 [
   {
     "text": "What _ you doing?",
+    "explanation": "Present continuous tense",
     "answers": [
       {
         "text": "are",
@@ -22,6 +23,7 @@
   },
   {
     "text": "Some time you don't need to _ a right answer.",
+    "explanation": "to + infinitive",
     "answers": [{ "text": "choose", "right": true }]
   }
 ]

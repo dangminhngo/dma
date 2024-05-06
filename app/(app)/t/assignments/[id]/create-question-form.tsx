@@ -38,6 +38,7 @@ export default function CreateQuestionForm({
     resolver: zodResolver(questionSchema),
     defaultValues: {
       text: "",
+      explanation: "",
       answers: {
         "1": {
           text: "",
@@ -64,6 +65,7 @@ export default function CreateQuestionForm({
       assignmentId,
       data: {
         text: values.text,
+        explanation: values.explanation,
         answers: Object.values(values.answers),
       },
     })
@@ -83,6 +85,19 @@ export default function CreateQuestionForm({
               <FormLabel>Text</FormLabel>
               <FormControl>
                 <Input placeholder="Question" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="explanation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Explanation</FormLabel>
+              <FormControl>
+                <Input placeholder="Explanation" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -226,6 +241,7 @@ const answerSchema = z.object({ text: z.string(), right: z.boolean() })
 
 const questionSchema = z.object({
   text: z.string(),
+  explanation: z.string(),
   answers: z.object({
     "1": answerSchema,
     "2": answerSchema,

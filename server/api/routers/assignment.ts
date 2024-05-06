@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { assignmentSelects } from "../selects"
+import { assignmentSelects, scoreSelects } from "../selects"
 import { createTRPCRouter, protectedProcedure, teacherProcedure } from "../trpc"
 
 export const assignmentRouter = createTRPCRouter({
@@ -60,6 +60,25 @@ export const assignmentRouter = createTRPCRouter({
       return ctx.db.assignment.delete({
         where: { id: input.id },
         select: assignmentSelects,
+      })
+    }),
+  allowRetake: teacherProcedure
+    .input(z.object({ studentId: z.string(), assignmentId: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.studentAnswer.deleteMany({
+        where: {
+          assignmentId: input.assignmentId,
+          studentId: input.studentId,
+        },
+      })
+      return ctx.db.score.delete({
+        where: {
+          assignmentId_studentId: {
+            assignmentId: input.assignmentId,
+            studentId: input.studentId,
+          },
+        },
+        select: scoreSelects,
       })
     }),
 })

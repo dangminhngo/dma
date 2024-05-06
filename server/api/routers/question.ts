@@ -10,6 +10,7 @@ export const questionRouter = createTRPCRouter({
         assignmentId: z.number(),
         data: z.object({
           text: z.string(),
+          explanation: z.string().optional(),
           answers: z.array(
             z.object({
               text: z.string(),
@@ -24,6 +25,7 @@ export const questionRouter = createTRPCRouter({
         data: {
           assignmentId: input.assignmentId,
           text: input.data.text,
+          explanation: input.data.explanation,
           answers: {
             createMany: { data: input.data.answers },
           },
@@ -38,6 +40,7 @@ export const questionRouter = createTRPCRouter({
         data: z.array(
           z.object({
             text: z.string(),
+            explanation: z.string().optional(),
             answers: z.array(
               z.object({
                 text: z.string(),
@@ -55,6 +58,7 @@ export const questionRouter = createTRPCRouter({
           data: {
             assignmentId: input.assignmentId,
             text: data.text,
+            explanation: data.explanation,
             answers: {
               createMany: { data: data.answers },
             },
@@ -72,6 +76,9 @@ export const questionRouter = createTRPCRouter({
       return ctx.db.question.findMany({
         where: { assignmentId: input.assignmentId },
         select: questionSelects,
+        orderBy: {
+          id: "asc",
+        },
       })
     }),
   byId: protectedProcedure
@@ -86,17 +93,18 @@ export const questionRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.number(),
-        data: z.object({
-          text: z.string(),
-        }),
+        data: z
+          .object({
+            text: z.string(),
+            explanation: z.string(),
+          })
+          .partial(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.question.update({
         where: { id: input.id },
-        data: {
-          text: input.data.text,
-        },
+        data: input.data,
         select: questionSelects,
       })
     }),

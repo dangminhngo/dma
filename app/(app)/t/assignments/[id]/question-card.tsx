@@ -78,6 +78,7 @@ export default function QuestionCard({
             />
           ))}
         </div>
+        <div><strong className="font-medium">Explanation:</strong> {question.explanation}</div>
       </div>
       <div className="pointer-events-none flex items-center space-x-2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
         <Dialog>

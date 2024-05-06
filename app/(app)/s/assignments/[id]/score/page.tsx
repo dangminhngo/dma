@@ -1,5 +1,7 @@
+import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 
+import { buttonVariants } from "~/components/ui/button"
 import { Heading } from "~/components/ui/heading"
 import { cn } from "~/lib/utils"
 import { getServerAuthSession } from "~/server/auth"
@@ -36,6 +38,12 @@ export default async function AssignmentScorePage({
         You cannot be allowed to take this assignment again. If there is
         something wrong, contact the teacher of this course.
       </div>
+      <Link
+        href={`/s/assignments/${assignment.id}/results`}
+        className={buttonVariants({ variant: "default" })}
+      >
+        See Your Results
+      </Link>
     </div>
   )
 }

@@ -26,7 +26,7 @@ export default function AnswerChip({
   return (
     <div
       className={cn(
-        "group/chip flex items-center justify-between space-x-4 rounded-full px-3 py-1",
+        "group/chip flex items-center justify-between space-x-4 rounded-full px-4 py-2",
         answer.right
           ? "bg-primary font-bold text-primary-foreground"
           : "bg-foreground/5"

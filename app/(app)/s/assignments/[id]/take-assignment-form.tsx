@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -32,6 +32,14 @@ export default function TakeAssignmentForm({
   const scoreCreator = api.score.create.useMutation({
     async onSuccess(data) {
       router.push(`/s/assignments/${data.assignmentId}/score`)
+    },
+    async onError(err) {
+      console.error(err)
+    },
+  })
+  const studentAnswerCreator = api.studentAnswer.createMany.useMutation({
+    async onSuccess(data) {
+      console.log(data)
     },
     async onError(err) {
       console.error(err)
@@ -70,8 +78,10 @@ export default function TakeAssignmentForm({
         return res
       }, 0)
 
-      const points = Math.round(result / questions.length) * 10
+      let points = (result / questions.length) * 10
+      points = parseFloat(points.toFixed(1))
 
+      studentAnswerCreator.mutate({ assignmentId, answers: values })
       scoreCreator.mutate({ assignmentId, points })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

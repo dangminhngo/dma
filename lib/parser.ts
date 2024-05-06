@@ -15,6 +15,7 @@ export function parseSet(json: string): z.infer<typeof setSchema> | undefined {
 const assignmentSchema = z.array(
   z.object({
     text: z.string(),
+    explanation: z.string(),
     answers: z.array(z.object({ text: z.string(), right: z.boolean() })),
   })
 )

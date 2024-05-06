@@ -21,7 +21,7 @@ export const scoreRouter = createTRPCRouter({
       return ctx.db.score.findMany({
         where: { assignmentId: input.assignmentId },
         orderBy: { points: "desc" },
-        select: scoreSelects,
+        select: { ...scoreSelects, student: true },
       })
     }),
   listByStudent: protectedProcedure.query(async ({ ctx }) => {

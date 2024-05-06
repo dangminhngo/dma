@@ -62,36 +62,54 @@ model Word {
 }
 
 model Assignment {
-  id          Int        @id @default(autoincrement())
-  title       String
-  description String?
-  expiresIn   String     @default("72h")
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  course      Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId    Int
-  questions   Question[]
-  scores      Score[]
+  id            Int             @id @default(autoincrement())
+  title         String
+  description   String?
+  expiresIn     String          @default("72h")
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  course        Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId      Int
+  questions     Question[]
+  scores        Score[]
+  StudentAnswer StudentAnswer[]
 }
 
 model Question {
-  id           Int        @id @default(autoincrement())
-  text         String
-  image        String?
-  audio        String?
-  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
-  assignmentId Int
-  answers      Answer[]
+  id             Int             @id @default(autoincrement())
+  text           String
+  image          String?
+  audio          String?
+  assignment     Assignment      @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  assignmentId   Int
+  answers        Answer[]
+  explanation    String?
+  studentAnswers StudentAnswer[]
 }
 
 model Answer {
-  id         Int      @id @default(autoincrement())
-  text       String?
-  image      String?
-  audio      String?
-  right      Boolean  @default(false)
-  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId Int
+  id             Int             @id @default(autoincrement())
+  text           String?
+  image          String?
+  audio          String?
+  right          Boolean         @default(false)
+  question       Question        @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId     Int
+  studentAnswers StudentAnswer[]
+}
+
+model StudentAnswer {
+  id           Int        @id @default(autoincrement())
+  student      User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId    String
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  assignmentId Int
+  question     Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId   Int
+  answer       Answer     @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  answerId     Int
+
+  @@unique([studentId, assignmentId, questionId, answerId])
 }
 
 model Score {
@@ -118,21 +136,22 @@ enum UserStatus {
 }
 
 model User {
-  id               String     @id @default(cuid())
+  id               String          @id @default(cuid())
   name             String?
-  email            String?    @unique
+  email            String?         @unique
   emailVerified    DateTime?
   image            String?
   accounts         Account[]
   sessions         Session[]
-  role             UserRole   @default(STUDENT)
+  role             UserRole        @default(STUDENT)
   password         String?
-  status           UserStatus @default(PENDING)
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
-  teacherOfCourses Course[]   @relation("Teacher")
-  studentOfCourses Course[]   @relation("Student")
+  status           UserStatus      @default(PENDING)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  teacherOfCourses Course[]        @relation("Teacher")
+  studentOfCourses Course[]        @relation("Student")
   scores           Score[]
+  answers          StudentAnswer[]
 }
 
 model Account {

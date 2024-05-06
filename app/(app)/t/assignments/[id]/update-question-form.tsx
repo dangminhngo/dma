@@ -38,15 +38,14 @@ export default function UpdateQuestionForm({
     resolver: zodResolver(questionSchema),
     defaultValues: {
       text: question.text,
+      explanation: question.explanation ?? "",
     },
   })
 
   function onSubmit(values: z.infer<typeof questionSchema>) {
     return questionUpdater.mutate({
       id: question.id,
-      data: {
-        text: values.text,
-      },
+      data: values,
     })
   }
 
@@ -69,6 +68,19 @@ export default function UpdateQuestionForm({
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="explanation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Explanation</FormLabel>
+              <FormControl>
+                <Input placeholder="Explanation" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit">Save</Button>
       </form>
     </Form>
@@ -77,4 +89,5 @@ export default function UpdateQuestionForm({
 
 const questionSchema = z.object({
   text: z.string(),
+  explanation: z.string(),
 })
