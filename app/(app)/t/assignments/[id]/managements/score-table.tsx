@@ -19,6 +19,7 @@ import { Button } from "~/components/ui/button"
 import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
 import { type InferElement } from "~/types"
+import { formatDateTime } from "~/lib/utils"
 
 type ScoreRow = InferElement<RouterOutput["score"]["listByAssignment"]>
 
@@ -59,6 +60,11 @@ export default function ScoreTable({ assignmentId }: ScoreTableProps) {
       {
         accessorKey: "points",
         header: "Points",
+      },
+      {
+        accessorKey: "createdAt",
+        header: "Timestamp",
+        cell: (props) => formatDateTime(props.getValue() as Date)
       },
       {
         header: "Actions",

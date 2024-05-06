@@ -79,6 +79,7 @@ export const scoreSelects = {
   points: true,
   assignmentId: true,
   studentId: true,
+  createdAt: true,
 } satisfies Prisma.ScoreSelect
 
 export const studentAnswerSelects = {

@@ -119,6 +119,7 @@ model Score {
   assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
   assignmentId Int
   points       Float
+  createdAt    DateTime   @default(now())
 
   @@unique([assignmentId, studentId])
 }

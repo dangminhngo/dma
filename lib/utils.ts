@@ -1,5 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
-import { secondsToMinutes } from "date-fns"
+import { formatDate, secondsToMinutes } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -13,4 +13,8 @@ export function convertTime(secs: number) {
     min: String(min).padStart(2, "0"),
     sec: String(secs - min * 60).padStart(2, "0")
   }
+}
+
+export function formatDateTime(dt: Date | string | number, format?: string) {
+  return formatDate(dt, format ?? "yyyy/MM/dd - HH:mm:SS")
 }
