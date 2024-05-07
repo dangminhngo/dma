@@ -14,6 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form"
+import { Input } from "~/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group"
 import { convertTime } from "~/lib/utils"
 import { api } from "~/trpc/react"
@@ -69,10 +70,14 @@ export default function TakeAssignmentForm({
 
   const onSubmit = useCallback(
     (values: z.infer<typeof schema>) => {
+      // return console.log(values)
       const result = Object.keys(values).reduce((res, curr) => {
         const question = questions.find((q) => q.id === +curr)
         if (!question) return res
-        if (question.answers.find((ans) => ans.id === +values[curr])?.right) {
+        if (
+          question.answers.find((ans) => ans.text.trim() === values[curr])
+            ?.right
+        ) {
           return ++res
         }
         return res
@@ -118,7 +123,7 @@ export default function TakeAssignmentForm({
               control={form.control}
               name={question.id + ""}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="rounded-lg border p-4">
                   <FormLabel className="text-lg font-normal">
                     <strong className="font-medium">
                       Question {index + 1}
@@ -131,25 +136,31 @@ export default function TakeAssignmentForm({
                       defaultValue={field.value}
                       className="grid grid-cols-2"
                     >
-                      {question.answers.map((answer) => (
-                        <FormItem
-                          key={answer.id}
-                          className="flex flex-row items-center space-x-2 space-y-0"
-                        >
-                          <FormControl>
-                            <RadioGroupItem value={answer.id + ""} />
-                          </FormControl>
-                          <FormLabel
-                            className="text-lg font-normal"
-                            style={{
-                              fontWeight:
-                                field.value === answer.id + "" ? "500" : "400",
-                            }}
+                      {question.answers.length > 1 ? (
+                        question.answers.map((answer) => (
+                          <FormItem
+                            key={answer.id}
+                            className="flex flex-row items-center space-x-2 space-y-0"
                           >
-                            {answer.text}
-                          </FormLabel>
-                        </FormItem>
-                      ))}
+                            <FormControl>
+                              <RadioGroupItem value={answer.text ?? ""} />
+                            </FormControl>
+                            <FormLabel
+                              className="text-lg font-normal"
+                              style={{
+                                fontWeight:
+                                  field.value === answer.text + ""
+                                    ? "500"
+                                    : "400",
+                              }}
+                            >
+                              {answer.text}
+                            </FormLabel>
+                          </FormItem>
+                        ))
+                      ) : (
+                        <Input placeholder="Answer" {...field} />
+                      )}
                     </RadioGroup>
                   </FormControl>
                   <FormMessage />

@@ -11,12 +11,6 @@ export const questionRouter = createTRPCRouter({
         data: z.object({
           text: z.string(),
           explanation: z.string().optional(),
-          answers: z.array(
-            z.object({
-              text: z.string(),
-              right: z.boolean(),
-            })
-          ),
         }),
       })
     )
@@ -26,9 +20,6 @@ export const questionRouter = createTRPCRouter({
           assignmentId: input.assignmentId,
           text: input.data.text,
           explanation: input.data.explanation,
-          answers: {
-            createMany: { data: input.data.answers },
-          },
         },
         select: questionSelects,
       })

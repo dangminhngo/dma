@@ -16,14 +16,27 @@ import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
 import { type InferElement } from "~/types"
 
-interface UpdateQuestionFormProps {
-  question: InferElement<RouterOutput["question"]["list"]>
+interface QuestionFormProps {
+  editing?: boolean
+  assignmentId: number
+  question?: InferElement<RouterOutput["question"]["list"]>
 }
 
-export default function UpdateQuestionForm({
+export default function QuestionForm({
+  editing = false,
+  assignmentId,
   question,
-}: UpdateQuestionFormProps) {
+}: QuestionFormProps) {
   const utils = api.useUtils()
+
+  const questionCreator = api.question.create.useMutation({
+    async onSuccess(data) {
+      await utils.question.list.invalidate({ assignmentId: data.assignmentId })
+    },
+    async onError(err) {
+      console.log(err)
+    },
+  })
 
   const questionUpdater = api.question.update.useMutation({
     async onSuccess(data) {
@@ -37,16 +50,20 @@ export default function UpdateQuestionForm({
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
-      text: question.text,
-      explanation: question.explanation ?? "",
+      text: question?.text ?? "",
+      explanation: question?.explanation ?? "",
     },
   })
 
   function onSubmit(values: z.infer<typeof questionSchema>) {
-    return questionUpdater.mutate({
-      id: question.id,
-      data: values,
-    })
+    if (editing && question) {
+      return questionUpdater.mutate({
+        id: question.id,
+        data: values,
+      })
+    }
+
+    questionCreator.mutate({ assignmentId, data: values })
   }
 
   return (

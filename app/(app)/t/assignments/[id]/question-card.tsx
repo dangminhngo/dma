@@ -28,7 +28,7 @@ import { type RouterOutput } from "~/trpc/types"
 import { type InferElement } from "~/types"
 import AnswerChip from "./answer-chip"
 import AnswerForm from "./answer-form"
-import UpdateQuestionForm from "./update-question-form"
+import QuestionForm from "./question-form"
 
 interface QuestionCardProps {
   assignmentId: number
@@ -78,7 +78,10 @@ export default function QuestionCard({
             />
           ))}
         </div>
-        <div><strong className="font-medium">Explanation:</strong> {question.explanation}</div>
+        <div>
+          <strong className="font-medium">Explanation:</strong>{" "}
+          {question.explanation}
+        </div>
       </div>
       <div className="pointer-events-none flex items-center space-x-2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
         <Dialog>
@@ -116,7 +119,11 @@ export default function QuestionCard({
                   Change question term and definition
                 </DialogDescription>
               </DialogHeader>
-              <UpdateQuestionForm question={question} />
+              <QuestionForm
+                assignmentId={question.assignmentId}
+                question={question}
+                editing
+              />
             </DialogContent>
           </DialogPortal>
         </Dialog>

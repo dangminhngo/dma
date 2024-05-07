@@ -88,14 +88,13 @@ model Question {
 }
 
 model Answer {
-  id             Int             @id @default(autoincrement())
-  text           String?
-  image          String?
-  audio          String?
-  right          Boolean         @default(false)
-  question       Question        @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId     Int
-  studentAnswers StudentAnswer[]
+  id         Int      @id @default(autoincrement())
+  text       String
+  image      String?
+  audio      String?
+  right      Boolean  @default(false)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId Int
 }
 
 model StudentAnswer {
@@ -106,10 +105,9 @@ model StudentAnswer {
   assignmentId Int
   question     Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId   Int
-  answer       Answer     @relation(fields: [answerId], references: [id], onDelete: Cascade)
-  answerId     Int
+  text         String
 
-  @@unique([studentId, assignmentId, questionId, answerId])
+  @@unique([studentId, assignmentId, questionId])
 }
 
 model Score {

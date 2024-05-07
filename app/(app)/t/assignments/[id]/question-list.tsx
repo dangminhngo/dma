@@ -15,8 +15,8 @@ import { Heading } from "~/components/ui/heading"
 import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
 import AssigmentImport from "./assignment-import"
-import CreateQuestionForm from "./create-question-form"
 import QuestionCard from "./question-card"
+import QuestionForm from "./question-form"
 
 interface QuestionListProps {
   assignment: RouterOutput["assignment"]["byId"]
@@ -97,7 +97,7 @@ export default function QuestionList({ assignment }: QuestionListProps) {
                     Add a new question to the assignment
                   </DialogDescription>
                 </DialogHeader>
-                <CreateQuestionForm assignmentId={assignment.id} />
+                <QuestionForm assignmentId={assignment.id} />
               </DialogContent>
             </DialogPortal>
           </Dialog>

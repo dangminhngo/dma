@@ -16,7 +16,7 @@ export default function ExplainedQuestion({
   studentAnswer,
 }: ExplainedQuestionProps) {
   const yourAnswer = question.answers.find(
-    (a) => a.id === studentAnswer?.answerId
+    (a) => a.text === studentAnswer?.text
   )
 
   return (
@@ -37,7 +37,7 @@ export default function ExplainedQuestion({
             yourAnswer?.right ? "text-green-500" : "text-red-500"
           )}
         >
-          {yourAnswer?.text}
+          {studentAnswer?.text}
         </span>
       </div>
       <div className="text-muted-foreground">
