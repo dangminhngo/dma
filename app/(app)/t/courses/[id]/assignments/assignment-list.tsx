@@ -16,6 +16,7 @@ import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
 import AssignmentCard from "./assignment-card"
 import AssignmentForm from "./assignment-form"
+import Loading from "~/components/loading"
 
 interface AssignmentListProps {
   course: RouterOutput["course"]["byId"]
@@ -43,13 +44,13 @@ export default function AssignmentList({ course }: AssignmentListProps) {
 
   if (!course) return null
 
-  if (assignmentListQuery.isLoading) return <div>Loading...</div>
+  if (assignmentListQuery.isLoading) return <Loading />
 
   if (assignmentListQuery.isError || !assignmentListQuery.data)
     return <div>Cannot fetch assignments</div>
 
   return (
-    <div className="flex flex-col items-stretch space-y-2 py-8">
+    <div className="flex flex-col items-stretch space-y-2 py-4">
       <div className="flex items-center justify-between">
         <Heading as="h3">
           Assignments ({assignmentListQuery.data.length ?? 0})

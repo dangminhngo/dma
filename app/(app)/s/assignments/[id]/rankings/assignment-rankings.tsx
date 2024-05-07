@@ -3,6 +3,7 @@
 import { type ColumnDef } from "@tanstack/react-table"
 
 import DataTable from "~/components/data-table"
+import TableLoading from "~/components/table-loading"
 import { formatDateTime } from "~/lib/utils"
 import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
@@ -41,7 +42,7 @@ export default function AssignmentRankings({
     assignmentId,
   })
 
-  if (scoreRankingsQuery.isLoading) return <div>Loading...</div>
+  if (scoreRankingsQuery.isLoading) return <TableLoading cols={5} rows={4} />
 
   if (scoreRankingsQuery.isError || !scoreRankingsQuery.data)
     return <div>Error</div>

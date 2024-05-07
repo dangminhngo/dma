@@ -16,6 +16,7 @@ import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
 import SetCard from "./set-card"
 import SetForm from "./set-form"
+import Loading from "~/components/loading"
 
 interface SetListProps {
   course: RouterOutput["course"]["byId"]
@@ -41,13 +42,13 @@ export default function SetList({ course }: SetListProps) {
 
   if (!course) return null
 
-  if (setListQuery.isLoading) return <div>Loading...</div>
+  if (setListQuery.isLoading) return <Loading />
 
   if (setListQuery.isError || !setListQuery.data)
     return <div>Cannot fetch sets</div>
 
   return (
-    <div className="flex flex-col items-stretch space-y-2 py-8">
+    <div className="flex flex-col items-stretch space-y-2 py-4">
       <div className="flex items-center justify-between">
         <Heading as="h3">Sets ({setListQuery.data.length ?? 0})</Heading>
         <Dialog>

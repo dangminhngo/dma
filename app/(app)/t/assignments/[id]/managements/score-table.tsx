@@ -3,6 +3,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 
 import DataTable from "~/components/data-table"
 import { CloseIcon } from "~/components/icons"
+import TableLoading from "~/components/table-loading"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -119,7 +120,8 @@ export default function ScoreTable({ assignmentId }: ScoreTableProps) {
     []
   )
 
-  if (scoreListByAssignmentQuery.isLoading) return <div>Loading...</div>
+  if (scoreListByAssignmentQuery.isLoading)
+    return <TableLoading cols={6} rows={4} />
 
   if (scoreListByAssignmentQuery.isError || !scoreListByAssignmentQuery.data)
     return <div>Error</div>

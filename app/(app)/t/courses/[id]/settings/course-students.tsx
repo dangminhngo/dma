@@ -1,6 +1,7 @@
 "use client"
 
 import { PlusIcon } from "~/components/icons"
+import Loading from "~/components/loading"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -45,7 +46,7 @@ export default function CourseStudents({ course }: CourseStudentsProps) {
     removeStudentMutation.mutate({ courseId: course.id, studentId: id })
   }
 
-  if (listCourseStudentsQuery.isLoading) return <div>Loading...</div>
+  if (listCourseStudentsQuery.isLoading) return <Loading />
 
   if (listCourseStudentsQuery.isError || !listCourseStudentsQuery.data)
     return <div>Error</div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { PlusIcon } from "~/components/icons"
+import Loading from "~/components/loading"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -44,13 +45,13 @@ export default function AnnouncementList({ course }: AnnouncementListProps) {
 
   if (!course) return null
 
-  if (announcementListQuery.isLoading) return <div>Loading...</div>
+  if (announcementListQuery.isLoading) return <Loading onlyColumn />
 
   if (announcementListQuery.isError || !announcementListQuery.data)
     return <div>Cannot fetch announcements</div>
 
   return (
-    <div className="flex flex-col items-stretch space-y-2 py-8">
+    <div className="flex flex-col items-stretch space-y-2 py-4">
       <div className="flex items-center justify-between">
         <Heading as="h3">
           Announcements ({announcementListQuery.data?.length ?? 0})

@@ -10,7 +10,7 @@ export default async function AssignmentsPage({
   const assignments = await api.assignment.list({ courseId: +params.id })
 
   return (
-    <div className="space-y-2 py-8">
+    <div className="space-y-2 py-4">
       <Heading as="h3">Assignments ({assignments.length ?? 0})</Heading>
       <div className="grid grid-cols-2 gap-4">
         {assignments.map((assignment) => (

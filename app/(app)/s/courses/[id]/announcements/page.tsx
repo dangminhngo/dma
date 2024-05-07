@@ -10,7 +10,7 @@ export default async function CourseAnnouncementsPage({
   const announcements = await api.announcement.list({ courseId: +params.id })
 
   return (
-    <div className="space-y-2 py-8">
+    <div className="space-y-2 py-4">
       <Heading as="h3">Announcements ({announcements.length ?? 0})</Heading>
       <div className="grid grid-cols-1 gap-2">
         {announcements.map((announcement) => (

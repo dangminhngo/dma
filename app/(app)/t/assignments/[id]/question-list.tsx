@@ -1,6 +1,7 @@
 "use client"
 
 import { PlusIcon } from "~/components/icons"
+import Loading from "~/components/loading"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -44,13 +45,13 @@ export default function QuestionList({ assignment }: QuestionListProps) {
 
   if (!assignment) return null
 
-  if (questionListQuery.isLoading) return <div>Loading...</div>
+  if (questionListQuery.isLoading) return <Loading onlyColumn />
 
   if (questionListQuery.isError || !questionListQuery.data)
     return <div>Cannot fetch questions</div>
 
   return (
-    <div className="flex flex-col items-stretch space-y-2">
+    <div className="flex flex-col items-stretch space-y-2 py-4">
       <div className="flex items-center justify-between">
         <Heading as="h3">
           Questions ({questionListQuery.data.length ?? 0})

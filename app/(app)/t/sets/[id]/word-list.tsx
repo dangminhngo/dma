@@ -1,6 +1,7 @@
 "use client"
 
 import { PlusIcon } from "~/components/icons"
+import Loading from "~/components/loading"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -42,13 +43,13 @@ export default function WordList({ set }: WordListProps) {
 
   if (!set) return null
 
-  if (wordListQuery.isLoading) return <div>Loading...</div>
+  if (wordListQuery.isLoading) return <Loading />
 
   if (wordListQuery.isError || !wordListQuery.data)
     return <div>Cannot fetch words</div>
 
   return (
-    <div className="flex flex-col items-stretch space-y-2">
+    <div className="flex flex-col items-stretch space-y-2 py-4">
       <div className="flex items-center justify-between">
         <Heading as="h3">Words ({wordListQuery.data.length ?? 0})</Heading>
         <div className="flex items-center space-x-2">
