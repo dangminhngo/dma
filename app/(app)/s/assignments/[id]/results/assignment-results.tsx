@@ -15,7 +15,7 @@ export default function AssignmentResults({
 }: AssignmentResultsProps) {
   return (
     <div className="space-y-4">
-      <Heading as="h1">Assignment Results: {assignment?.title}</Heading>
+      <Heading as="h1">Assignment: {assignment?.title} - Results</Heading>
       <div className="space-y-4">
         {questions.map((q, _index) => (
           <ExplainedQuestion

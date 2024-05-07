@@ -38,12 +38,20 @@ export default async function AssignmentScorePage({
         You cannot be allowed to take this assignment again. If there is
         something wrong, contact the teacher of this course.
       </div>
+      <div className="flex items-center space-x-2">
+      <Link
+        href={`/s/assignments/${assignment.id}/rankings`}
+        className={buttonVariants({ variant: "secondary" })}
+      >
+        See Rankings
+      </Link>
       <Link
         href={`/s/assignments/${assignment.id}/results`}
         className={buttonVariants({ variant: "default" })}
       >
         See Your Results
       </Link>
+</div>
     </div>
   )
 }

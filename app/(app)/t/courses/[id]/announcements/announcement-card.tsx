@@ -1,5 +1,4 @@
 import { AnnouncementLevel } from "@prisma/client"
-import { format } from "date-fns"
 
 import { DeleteIcon, EditIcon } from "~/components/icons"
 import {
@@ -24,7 +23,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
-import { cn } from "~/lib/utils"
+import { cn, formatDateTime } from "~/lib/utils"
 import { type RouterOutput } from "~/trpc/types"
 import { type InferElement } from "~/types"
 import AnnouncementForm from "./announcement-form"
@@ -43,7 +42,7 @@ export default function AnnouncementCard({
       <div className="space-y-1">
         <div className="flex items-center space-x-2 text-sm">
           <span className="text-muted-foreground">
-            {format(announcement.createdAt, "dd/MM/yyyy - kk:mm:ss")}
+            {formatDateTime(announcement.createdAt)}
           </span>
           <span>|</span>
           <span

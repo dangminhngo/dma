@@ -120,7 +120,10 @@ export default function TakeAssignmentForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-lg font-normal">
-                    {index + 1}. {question.text.replace("_", "______")}
+                    <strong className="font-medium">
+                      Question {index + 1}
+                    </strong>
+                    . {question.text.replace("_", "______")}
                   </FormLabel>
                   <FormControl>
                     <RadioGroup
