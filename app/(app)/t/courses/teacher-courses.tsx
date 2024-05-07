@@ -1,5 +1,6 @@
 "use client"
 
+import Breadcrumb from "~/components/breadcrumb"
 import { PlusIcon } from "~/components/icons"
 import { Button } from "~/components/ui/button"
 import {
@@ -20,9 +21,15 @@ interface TeacherCoursesProps {
   courses: RouterOutput["course"]["list"]
 }
 
+const links = [
+  { label: "Home", href: "/t" },
+  { label: "Courses", href: "/t/courses" },
+]
+
 export default function TeacherCourses({ courses }: TeacherCoursesProps) {
   return (
     <div className="space-y-4">
+      <Breadcrumb links={links} />
       <div className="flex items-center justify-between">
         <Heading as="h1">Courses ({courses.length})</Heading>
         <Dialog>

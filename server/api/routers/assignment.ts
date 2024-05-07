@@ -34,7 +34,7 @@ export const assignmentRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return ctx.db.assignment.findUnique({
         where: { id: input.id },
-        select: assignmentSelects,
+        select: { ...assignmentSelects, course: true },
       })
     }),
   update: teacherProcedure

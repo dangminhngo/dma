@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { notFound, redirect } from "next/navigation"
 
+import Breadcrumb from "~/components/breadcrumb"
 import { buttonVariants } from "~/components/ui/button"
 import { Heading } from "~/components/ui/heading"
 import { cn } from "~/lib/utils"
@@ -26,12 +27,38 @@ export default async function AssignmentScorePage({
 
   if (!score) return redirect(`/s/assignment/${assignment.id}`)
 
+  const links = [
+    {
+      label: "Home",
+      href: "/s",
+    },
+    {
+      label: "Courses",
+      href: "/s/courses",
+    },
+    {
+      label: assignment.course.name ?? assignment.courseId,
+      href: `/s/courses/${assignment.courseId}`,
+    },
+    {
+      label: "Assignments",
+      href: `/s/courses/${assignment.courseId}/assignments`,
+    },
+    {
+      label: assignment.title,
+      href: `/s/assignments/${assignment.id}`,
+    },
+    {
+      label: "Your Score",
+    },
+  ]
+
   return (
-    <div className="flex flex-col items-center space-y-4">
-      <Heading as="h1">Congrats</Heading>
-      <Heading as="h2">Assignment: {assignment.title}</Heading>
-      <Heading as="h3" className={cn("text-4xl", getScoreColor(score.points))}>
-        Score: {score.points}
+    <div className="space-y-4">
+      <Breadcrumb links={links} />
+      <Heading as="h1">Assignment: {assignment.title}</Heading>
+      <Heading as="h2" className={cn("text-4xl", getScoreColor(score.points))}>
+        Your Score: {score.points}
       </Heading>
       <div className="text-xl">{getText(score.points)}</div>
       <div className="text-muted-foreground">
@@ -39,19 +66,19 @@ export default async function AssignmentScorePage({
         something wrong, contact the teacher of this course.
       </div>
       <div className="flex items-center space-x-2">
-      <Link
-        href={`/s/assignments/${assignment.id}/rankings`}
-        className={buttonVariants({ variant: "secondary" })}
-      >
-        See Rankings
-      </Link>
-      <Link
-        href={`/s/assignments/${assignment.id}/results`}
-        className={buttonVariants({ variant: "default" })}
-      >
-        See Your Results
-      </Link>
-</div>
+        <Link
+          href={`/s/assignments/${assignment.id}/rankings`}
+          className={buttonVariants({ variant: "secondary" })}
+        >
+          See Rankings
+        </Link>
+        <Link
+          href={`/s/assignments/${assignment.id}/results`}
+          className={buttonVariants({ variant: "default" })}
+        >
+          See Your Results
+        </Link>
+      </div>
     </div>
   )
 }
