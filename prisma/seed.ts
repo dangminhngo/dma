@@ -1,6 +1,6 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { UserRole, UserStatus, type User } from "@prisma/client"
-import { hash } from "bcrypt"
+import { UserRole, UserStatus } from "@prisma/client"
+import { hash } from "bcryptjs"
 
 import { env } from "~/env"
 import { db } from "~/server/db"

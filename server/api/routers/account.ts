@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { UserRole, UserStatus } from "@prisma/client"
 import { TRPCError } from "@trpc/server"
-import { compare, hash } from "bcrypt"
+import { compare, hash } from "bcryptjs"
 import { type Adapter } from "next-auth/adapters"
 import { z } from "zod"
 

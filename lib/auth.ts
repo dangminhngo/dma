@@ -1,5 +1,5 @@
 import { UserStatus } from "@prisma/client"
-import { compare } from "bcrypt"
+import { compare } from "bcryptjs"
 import { type User } from "next-auth"
 
 import { env } from "~/env"
