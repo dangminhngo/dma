@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import Link from "next/link"
 
 import {
@@ -18,7 +19,7 @@ export default function Breadcrumb({ links }: BreadcrumbProps) {
     <BreadcrumbRoot>
       <BreadcrumbList>
         {links.map((link, _index) => (
-          <>
+          <Fragment key={_index}>
             <BreadcrumbItem>
               {_index === links.length - 1 ? (
                 <BreadcrumbPage>{link.label}</BreadcrumbPage>
@@ -29,7 +30,7 @@ export default function Breadcrumb({ links }: BreadcrumbProps) {
               )}
             </BreadcrumbItem>
             {_index < links.length - 1 && <BreadcrumbSeparator />}
-          </>
+          </Fragment>
         ))}
       </BreadcrumbList>
     </BreadcrumbRoot>
