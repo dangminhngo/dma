@@ -15,7 +15,7 @@ export default function Header({ session }: HeaderProps) {
       <div className="container flex h-16 items-center justify-between space-x-8">
         <div className="flex items-center space-x-8">
           <Link href="/">
-            <Logo />
+            <Logo className="h-12 w-12" />
           </Link>
           {session?.user && <Nav user={session.user} />}
         </div>
