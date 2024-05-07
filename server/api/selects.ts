@@ -23,7 +23,7 @@ export const courseSelects = {
   id: true,
   name: true,
   teacher: { select: userSelects },
-  students: { select: userSelects },
+  _count: { select: { students: true } },
   announcements: { select: announcementSelects },
 } satisfies Prisma.CourseSelect
 

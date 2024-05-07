@@ -14,8 +14,8 @@ import {
 } from "~/components/ui/dialog"
 import { Heading } from "~/components/ui/heading"
 import { type RouterOutput } from "~/trpc/types"
+import CourseCard from "./course-card"
 import CourseForm from "./course-form"
-import CourseList from "./course-list"
 
 interface TeacherCoursesProps {
   courses: RouterOutput["course"]["list"]
@@ -34,8 +34,9 @@ export default function TeacherCourses({ courses }: TeacherCoursesProps) {
         <Heading as="h1">Courses ({courses.length})</Heading>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="secondary" size="icon-sm">
-              <PlusIcon className="h-5 w-5" />
+            <Button className="flex items-center space-x-1 self-end" size="xs">
+              <PlusIcon className="h-4 w-4" />
+              <span>Add</span>
             </Button>
           </DialogTrigger>
           <DialogPortal>
@@ -51,7 +52,11 @@ export default function TeacherCourses({ courses }: TeacherCoursesProps) {
           </DialogPortal>
         </Dialog>
       </div>
-      <CourseList courses={courses} />
+      <div className="grid grid-cols-2 gap-4">
+        {courses.map((c) => (
+          <CourseCard key={c.id} course={c} />
+        ))}
+      </div>
     </div>
   )
 }

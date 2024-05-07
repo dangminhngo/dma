@@ -10,10 +10,13 @@ interface StudentCourseCardProps {
 export default function StudentCourseCard({ course }: StudentCourseCardProps) {
   return (
     <Link href={`/s/courses/${course?.id}`}>
-      <div className="flex flex-col space-y-2 rounded-lg border p-4">
+      <div className="rounded-lg border p-4">
         <Heading as="h3">{course?.name}</Heading>
-        <div className="text-muted-foreground">
+        <div className="text-sm text-muted-foreground">
           Teacher: {course?.teacher.name}
+        </div>
+        <div className="text-sm text-muted-foreground">
+          Students: {course?._count.students}
         </div>
       </div>
     </Link>

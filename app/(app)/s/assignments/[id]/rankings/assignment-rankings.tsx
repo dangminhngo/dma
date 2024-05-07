@@ -25,6 +25,9 @@ export default function AssignmentRankings({
     {
       accessorKey: "student.name",
       header: "Student",
+      cell: (props) => (
+        <strong className="font-medium">{props.getValue() as string}</strong>
+      ),
     },
     { accessorKey: "student.email", header: "Email" },
     { accessorKey: "points", header: "Points" },

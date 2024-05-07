@@ -36,6 +36,9 @@ export default function AddStudentForm({ course }: AddStudentFormProps) {
   const addStudentMutation = api.course.addStudent.useMutation({
     async onSuccess(data) {
       await utils.course.byId.invalidate({ id: data.id })
+      await utils.user.listCourseStudents.invalidate({
+        courseId: course?.id ?? 0,
+      })
     },
     async onError(err) {
       console.log(err)

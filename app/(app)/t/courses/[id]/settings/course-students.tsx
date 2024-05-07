@@ -24,9 +24,16 @@ interface CourseStudentsProps {
 export default function CourseStudents({ course }: CourseStudentsProps) {
   const utils = api.useUtils()
 
+  const listCourseStudentsQuery = api.user.listCourseStudents.useQuery({
+    courseId: course?.id ?? 0,
+  })
+
   const removeStudentMutation = api.course.removeStudent.useMutation({
     async onSuccess(data) {
       await utils.course.byId.invalidate({ id: data.id })
+      await utils.user.listCourseStudents.invalidate({
+        courseId: course?.id ?? 0,
+      })
     },
     async onError(err) {
       console.error(err)
@@ -37,6 +44,11 @@ export default function CourseStudents({ course }: CourseStudentsProps) {
     if (!course) throw new Error("No course")
     removeStudentMutation.mutate({ courseId: course.id, studentId: id })
   }
+
+  if (listCourseStudentsQuery.isLoading) return <div>Loading...</div>
+
+  if (listCourseStudentsQuery.isError || !listCourseStudentsQuery.data)
+    return <div>Error</div>
 
   return (
     <div className="flex flex-col items-stretch space-y-2 py-6">
@@ -63,8 +75,8 @@ export default function CourseStudents({ course }: CourseStudentsProps) {
         </Dialog>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        {!!course?.students.length &&
-          course?.students.map((st) => (
+        {!!listCourseStudentsQuery.data.length &&
+          listCourseStudentsQuery.data.map((st) => (
             <StudentCard
               key={st.id}
               user={st}

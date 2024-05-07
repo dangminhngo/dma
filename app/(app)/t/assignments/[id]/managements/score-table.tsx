@@ -16,10 +16,10 @@ import {
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog"
 import { Button } from "~/components/ui/button"
+import { formatDateTime } from "~/lib/utils"
 import { api } from "~/trpc/react"
 import { type RouterOutput } from "~/trpc/types"
 import { type InferElement } from "~/types"
-import { formatDateTime } from "~/lib/utils"
 
 type ScoreRow = InferElement<RouterOutput["score"]["listByAssignment"]>
 
@@ -50,8 +50,15 @@ export default function ScoreTable({ assignmentId }: ScoreTableProps) {
   const columns = useMemo<ColumnDef<ScoreRow>[]>(
     () => [
       {
+        header: "Ranking",
+        cell: (props) => props.row.index + 1,
+      },
+      {
         accessorKey: "student.name",
         header: "Student",
+        cell: (props) => (
+          <strong className="font-medium">{props.getValue() as string}</strong>
+        ),
       },
       {
         accessorKey: "student.email",
@@ -64,7 +71,7 @@ export default function ScoreTable({ assignmentId }: ScoreTableProps) {
       {
         accessorKey: "createdAt",
         header: "Timestamp",
-        cell: (props) => formatDateTime(props.getValue() as Date)
+        cell: (props) => formatDateTime(props.getValue() as Date),
       },
       {
         header: "Actions",
