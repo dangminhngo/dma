@@ -1,12 +1,25 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import { api } from "~/trpc/server"
-import SetCarousel from "./set-carousel"
+import WordFlashcards from "./word-flashcards"
+import WordList from "./word-list"
 
 export default async function SetPage({ params }: { params: { id: string } }) {
   const words = await api.word.list({ setId: +params.id })
 
   return (
     <div>
-      <SetCarousel words={words} />
+      <Tabs defaultValue="flashcards">
+        <TabsList>
+          <TabsTrigger value="flashcards">Flashcards</TabsTrigger>
+          <TabsTrigger value="list">List</TabsTrigger>
+        </TabsList>
+        <TabsContent value="flashcards">
+          <WordFlashcards words={words} />
+        </TabsContent>
+        <TabsContent value="list">
+          <WordList words={words} />
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

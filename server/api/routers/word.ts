@@ -11,6 +11,7 @@ export const wordRouter = createTRPCRouter({
         data: z.object({
           term: z.string(),
           definition: z.string(),
+          audio: z.string().optional(),
           image: z.string().optional(),
         }),
       })
@@ -29,6 +30,7 @@ export const wordRouter = createTRPCRouter({
           z.object({
             term: z.string(),
             definition: z.string(),
+            audio: z.string().optional(),
             image: z.string().optional(),
           })
         ),
@@ -67,11 +69,14 @@ export const wordRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.number(),
-        data: z.object({
-          term: z.string(),
-          definition: z.string(),
-          image: z.string().optional(),
-        }),
+        data: z
+          .object({
+            term: z.string(),
+            definition: z.string(),
+            audio: z.string(),
+            image: z.string(),
+          })
+          .partial(),
       })
     )
     .mutation(async ({ ctx, input }) => {

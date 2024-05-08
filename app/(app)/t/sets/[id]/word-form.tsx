@@ -53,6 +53,7 @@ export default function WordForm({
     defaultValues: {
       term: word?.term ?? "",
       definition: word?.definition ?? "",
+      audio: word?.definition ?? "",
     },
   })
 
@@ -96,6 +97,19 @@ export default function WordForm({
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="audio"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Audio</FormLabel>
+              <FormControl>
+                <Input placeholder="Audio" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit">{editing ? "Save" : "Create"}</Button>
       </form>
     </Form>
@@ -105,4 +119,5 @@ export default function WordForm({
 const wordSchema = z.object({
   term: z.string(),
   definition: z.string(),
+  audio: z.string(),
 })

@@ -1,10 +1,12 @@
 [
   {
     "term": "important",
-    "definition": "adj. quan trọng"
+    "definition": "adj. quan trọng",
+    "audio": "https://www.oxfordlearnersdictionaries.com/media/english/us_pron_ogg/i/imp/impor/important__us_1.ogg"
   },
   {
     "term": "cheap",
-    "definition": "adj. giá rẻ"
+    "definition": "adj. giá rẻ",
+    "audio": "https://www.oxfordlearnersdictionaries.com/media/english/us_pron_ogg/c/che/cheap/cheap__us_1.ogg"
   }
 ]

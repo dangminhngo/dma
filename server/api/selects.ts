@@ -31,6 +31,7 @@ export const wordSelects = {
   id: true,
   term: true,
   definition: true,
+  audio: true,
   image: true,
   setId: true,
 } satisfies Prisma.WordSelect
@@ -87,5 +88,5 @@ export const studentAnswerSelects = {
   studentId: true,
   assignmentId: true,
   questionId: true,
-  answerId: true,
+  text: true,
 } satisfies Prisma.StudentAnswerSelect

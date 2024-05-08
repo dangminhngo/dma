@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 const setSchema = z.array(
-  z.object({ term: z.string(), definition: z.string() })
+  z.object({ term: z.string(), definition: z.string(), audio: z.string() })
 )
 
 export function parseSet(json: string): z.infer<typeof setSchema> | undefined {

@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import { DeleteIcon, EditIcon } from "~/components/icons"
+import { AudioIcon, DeleteIcon, EditIcon } from "~/components/icons"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,6 +23,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
+import { useSound } from "~/hooks"
 import { type RouterOutput } from "~/trpc/types"
 import { type InferElement } from "~/types"
 import WordForm from "./word-form"
@@ -33,6 +34,8 @@ interface WordCardProps {
 }
 
 export default function WordCard({ word, onDelete }: WordCardProps) {
+  const { play } = useSound({ url: word.audio })
+
   return (
     <div className="group flex items-center justify-between rounded-lg border p-4">
       <div>
@@ -45,6 +48,9 @@ export default function WordCard({ word, onDelete }: WordCardProps) {
         )}
       </div>
       <div className="pointer-events-none flex items-center space-x-2 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+        <Button size="icon-sm" variant="ghost" onClick={play}>
+          <AudioIcon className="h-4 w-4" />
+        </Button>
         <Dialog>
           <DialogTrigger asChild>
             <Button size="icon-sm" variant="ghost">

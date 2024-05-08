@@ -6,19 +6,19 @@ import {
   CarouselPrevious,
 } from "~/components/ui/carousel"
 import { type RouterOutput } from "~/trpc/types"
-import FlipCard from "./flip-card"
+import WordCard from "./word-card"
 
-interface SetCarouselProps {
+interface WordFlashcardsProps {
   words: RouterOutput["word"]["list"]
 }
 
-export default function SetCarousel({ words }: SetCarouselProps) {
+export default function WordFlashcards({ words }: WordFlashcardsProps) {
   return (
     <Carousel>
       <CarouselContent>
         {words.map((word) => (
           <CarouselItem key={word.id}>
-            <FlipCard word={word} />
+            <WordCard word={word} flip />
           </CarouselItem>
         ))}
       </CarouselContent>
