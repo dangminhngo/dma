@@ -1,11 +1,9 @@
 import Link from "next/link"
-import { notFound, redirect } from "next/navigation"
+import { redirect } from "next/navigation"
 
-import Breadcrumb from "~/components/breadcrumb"
 import { buttonVariants } from "~/components/ui/button"
 import { Heading } from "~/components/ui/heading"
 import { cn } from "~/lib/utils"
-import { getServerAuthSession } from "~/server/auth"
 import { api } from "~/trpc/server"
 
 export default async function AssignmentScorePage({
@@ -13,52 +11,16 @@ export default async function AssignmentScorePage({
 }: {
   params: { id: string }
 }) {
-  const session = await getServerAuthSession()
-
-  if (!session) return redirect("/sign-in")
-
-  const assignment = await api.assignment.byId({ id: +params.id })
-
-  if (!assignment) return notFound()
-
   const score = await api.score.byAssignment({
-    assignmentId: assignment.id,
+    assignmentId: +params.id,
   })
 
-  if (!score) return redirect(`/s/assignment/${assignment.id}`)
-
-  const links = [
-    {
-      label: "Home",
-      href: "/s",
-    },
-    {
-      label: "Courses",
-      href: "/s/courses",
-    },
-    {
-      label: assignment.course.name ?? assignment.courseId,
-      href: `/s/courses/${assignment.courseId}`,
-    },
-    {
-      label: "Assignments",
-      href: `/s/courses/${assignment.courseId}/assignments`,
-    },
-    {
-      label: assignment.title,
-      href: `/s/assignments/${assignment.id}`,
-    },
-    {
-      label: "Your Score",
-    },
-  ]
+  if (!score) return redirect(`/s/assignment/${params.id}`)
 
   return (
     <div className="space-y-4">
-      <Breadcrumb links={links} />
-      <Heading as="h1">Assignment: {assignment.title}</Heading>
       <Heading as="h2" className={cn("text-4xl", getScoreColor(score.points))}>
-        Your Score: {score.points}
+        <span className="text-foreground/80">Your Score:</span> {score.points}
       </Heading>
       <div className="text-xl">{getText(score.points)}</div>
       <div className="text-muted-foreground">
@@ -67,16 +29,16 @@ export default async function AssignmentScorePage({
       </div>
       <div className="flex items-center space-x-2">
         <Link
-          href={`/s/assignments/${assignment.id}/rankings`}
-          className={buttonVariants({ variant: "secondary" })}
-        >
-          See Rankings
-        </Link>
-        <Link
-          href={`/s/assignments/${assignment.id}/results`}
+          href={`/s/assignments/${params.id}/results`}
           className={buttonVariants({ variant: "default" })}
         >
-          See Your Results
+          Your Results
+        </Link>
+        <Link
+          href={`/s/assignments/${params.id}/rankings`}
+          className={buttonVariants({ variant: "secondary" })}
+        >
+          Rankings
         </Link>
       </div>
     </div>
