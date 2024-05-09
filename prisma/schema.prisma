@@ -123,6 +123,18 @@ model Score {
   @@unique([assignmentId, studentId])
 }
 
+enum AppTheme {
+  DAY
+  NIGHT
+}
+
+model Settings {
+  id     Int      @id @default(autoincrement())
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String   @unique
+  theme  AppTheme @default(DAY)
+}
+
 // Necessary for Next auth
 enum UserRole {
   TEACHER
@@ -152,6 +164,7 @@ model User {
   studentOfCourses Course[]        @relation("Student")
   scores           Score[]
   answers          StudentAnswer[]
+  settings         Settings?
 }
 
 model Account {

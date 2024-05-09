@@ -6,6 +6,7 @@ import { courseRouter } from "./routers/course"
 import { questionRouter } from "./routers/question"
 import { scoreRouter } from "./routers/score"
 import { setRouter } from "./routers/set"
+import { settingsRouter } from "./routers/settings"
 import { studentAnswerRouter } from "./routers/student-answer"
 import { userRouter } from "./routers/user"
 import { wordRouter } from "./routers/word"
@@ -27,6 +28,7 @@ export const appRouter = createTRPCRouter({
   announcement: announcemenRouter,
   course: courseRouter,
   account: accountRouter,
+  settings: settingsRouter,
   user: userRouter,
 })
 

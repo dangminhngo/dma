@@ -10,7 +10,7 @@ export default function SettingsSidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex w-[256px] flex-col items-stretch space-y-0.5 border-r px-2">
+    <div className="flex w-[200px] flex-col items-stretch space-y-0.5 border-r px-2">
       {tabs.map(({ label, href, icon: Icon }) => (
         <SettingsSidebarLink
           key={href}

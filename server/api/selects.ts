@@ -90,3 +90,9 @@ export const studentAnswerSelects = {
   questionId: true,
   text: true,
 } satisfies Prisma.StudentAnswerSelect
+
+export const settingsSelects = {
+  id: true,
+  userId: true,
+  theme: true,
+} satisfies Prisma.SettingsSelect

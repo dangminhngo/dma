@@ -12,7 +12,7 @@ export default async function SettingsProfilePage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <Heading as="h1">Public Profile</Heading>
       <SettingsProfile session={session} />
     </div>
