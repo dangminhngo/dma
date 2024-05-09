@@ -38,21 +38,21 @@ export default function AnnouncementCard({
   onDelete,
 }: AnnouncementCardProps) {
   return (
-    <div className="group flex items-center justify-between rounded-lg border border-l-8 px-6 py-3 shadow">
-      <div className="space-y-1">
-        <div className="flex items-center space-x-2 text-sm">
-          <span className="text-muted-foreground">
-            {formatDateTime(announcement.createdAt)}
-          </span>
-          <span>|</span>
+    <div className="group flex items-center justify-between rounded-lg border px-6 py-3">
+      <div>
+        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
           <span
             className={cn(
-              "font-medium",
-              getClassNamesByLevel(announcement.level)
+              "block h-2 w-2 rounded-full",
+              getIndicatorColorByLevel(announcement.level)
             )}
           >
-            {announcement.level}
+            &nbsp;
           </span>
+          <span>{announcement.level}</span>
+        </div>
+        <div className="text-sm text-muted-foreground">
+          {formatDateTime(announcement.createdAt)}
         </div>
         <div>{announcement.text}</div>
       </div>
@@ -108,11 +108,11 @@ export default function AnnouncementCard({
   )
 }
 
-function getClassNamesByLevel(level: AnnouncementLevel) {
+function getIndicatorColorByLevel(level: AnnouncementLevel) {
   switch (level) {
     case AnnouncementLevel.NORMAL:
-      return "text-muted-foreground"
+      return "bg-foreground"
     case AnnouncementLevel.IMPORTANT:
-      return "text-destructive"
+      return "bg-destructive"
   }
 }
